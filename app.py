@@ -8,13 +8,18 @@ import matplotlib.pyplot as plt
 class Autoencoder(nn.Module):
     def __init__(self):
         super().__init__()
+
         self.encoder = nn.Sequential(
             nn.Flatten(),
-            nn.Linear(28*28, 64),
+            nn.Linear(28*28, 256),
+            nn.ReLU(),
+            nn.Linear(256, 64),
             nn.ReLU(),
         )
         self.decoder = nn.Sequential(
-            nn.Linear(64 + 10, 28*28),
+            nn.Linear(64 + 10, 256),
+            nn.ReLU(),
+            nn.Linear(256, 28*28),
             nn.Sigmoid(),
             nn.Unflatten(1, (1, 28, 28))
         )
